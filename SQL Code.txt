@@ -1,0 +1,127 @@
+LOAD DATA
+INFILE 'Your Path'
+INTO TABLE employee_data
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+(
+    role,
+    country,
+    company,
+    company_rating,
+    job_title,
+    median,
+    low,
+    high,
+    unit,
+    currency
+)
+
+
+sqlldr userid=username/password@TNSname control=Your Path
+
+CREATE TABLE employee_data (
+    role            VARCHAR2(255),
+    country         VARCHAR2(255),
+    company         VARCHAR2(255),
+    company_rating  NUMBER,
+    job_title       VARCHAR2(255),
+    median          VARCHAR2(255),
+    low             VARCHAR2(255),
+    high            VARCHAR2(255),
+    unit            VARCHAR2(255),
+    currency        VARCHAR2(255)
+);
+
+>>>
+UPDATE employee_data SET currency=('JPY')
+where country='Japan';
+/
+UPDATE employee_data SET currency=('EEK')
+where country='Estonia';
+/
+UPDATE employee_data SET currency=('GBP')
+where country='United Kingdom';
+/
+UPDATE employee_data SET currency=('ILS')
+where country='Israel';
+/
+UPDATE employee_data SET currency=('EUR')
+where country IN('Austria','Belgium','Finland','France',
+'Germany','Greece','Italy','Luxembourg','Netherlands','Spain','Ireland');
+/
+UPDATE employee_data SET currency=('USD')
+where country IN('India','Jordan','United States');
+/
+UPDATE employee_data SET currency=('VND')
+where country='Vietnam';
+/
+UPDATE employee_data SET currency=('KRW')
+where country='South Korea';
+/
+UPDATE employee_data SET currency=('PHP')
+where country='Philippines';
+/
+UPDATE employee_data SET currency=('CNY')
+where country='China';
+/
+UPDATE employee_data SET currency=('CAD')
+where country='Canada';
+/
+UPDATE employee_data SET currency=('AUD')
+where country='Australia';
+/
+UPDATE employee_data SET currency=('BRL')
+where country='Brazil';
+/
+UPDATE employee_data SET currency=('MXN')
+where country='Mexico';
+/
+UPDATE employee_data SET currency=('NZD')
+where country='New Zealand';
+/
+####
+
+UPDATE employee_data
+SET 
+    low = REPLACE(low, 'NÂ¥', ''),
+    median = REPLACE(median, 'NÂ¥', ''),
+    high = REPLACE(high, 'NÂ¥', '')
+WHERE country = 'China';
+
+UPDATE employee_data
+SET 
+    low = REPLACE(low, 'A$', ''),
+    median = REPLACE(median, 'A$', ''),
+    high = REPLACE(high, 'A$', '')
+WHERE country = 'Canada';
+
+UPDATE employee_data
+SET 
+    low = REPLACE(low, '$', ''),
+    median = REPLACE(median, '$', ''),
+    high = REPLACE(high, '$', '')
+WHERE country IN('Brazil','Australia');
+
+UPDATE employee_data
+SET 
+    low = REPLACE(low, 'X$', ''),
+    median = REPLACE(median, 'X$', ''),
+    high = REPLACE(high, 'X$', '')
+WHERE country='Mexico';
+
+UPDATE employee_data
+SET 
+    low = REPLACE(low, 'Z$', ''),
+    median = REPLACE(median, 'Z$', ''),
+    high = REPLACE(high, 'Z$', '')
+WHERE country='New Zealand';
+
+
+#####
+
+UPDATE employee_data SET company=('No Company')
+where company LIKE '%?%';
+
+####
+
+UPDATE employee_data
+SET company_rating = ROUND(company_rating);
